@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -54,45 +58,48 @@ public class Main {
     // Assignment 1: Filtering Students
     // Goal: Filter students who have a grade of 8.5 and above and return them.
     public static List<Student> assignment1(List<Student> students) {
-        throw new UnsupportedOperationException();
+        Stream<Student> stream = students.stream();
+        return stream.filter(student -> student.getGrade() >= 8.5).collect(Collectors.toList());
     }
 
     // Assignment 2: Transforming Students
     // Goal: Transform the list of students into a list of their names.
     public static List<String> assignment2(List<Student> students) {
-        throw new UnsupportedOperationException();
+        Stream<Student> stream = students.stream();
+        return stream.map(Student::getName).collect(Collectors.toList());
     }
 
     // Assignment 3: Summing with Stream
     // Goal: Calculate the total of all students' grades and return the resulting total.
     public static double assignment3(List<Student> students) {
-        throw new UnsupportedOperationException();
+        Stream<Student> stream = students.stream();
+        return stream.mapToDouble(Student::getGrade).sum();
     }
 
     // Assignment 4: Counting Students
     // Goal: Count how many students are 20 years old and return the resulting number.
     public static long assignment4(List<Student> students) {
-        throw new UnsupportedOperationException();
-
+        Stream<Student> stram = students.stream();
+        return stram.filter(student -> student.getAge() == 20).count();
     }
 
     // Assignment 5: Using Optional
     // Goal: Find the student with the highest grade. Return an Optional to handle the case where the students list is empty.
-    public static Optional<Student> assignment5(List<Student> students) {
-        throw new UnsupportedOperationException();
+    public static Optional<Student> assignment5(List<Student> students){
+      Stream<Student> studentStream = students.stream();
+        return studentStream.max((s1, s2) -> Double.compare(s1.getGrade(), s2.getGrade()));
     }
 
     // Assignment 6: Grouping Students
     // Goal: Group students by age. Return a Map<Integer, List<Student>> where the key is the age and the value is a list of students of that age.
     public static Map<Integer, List<Student>> assignment6(List<Student> students) {
-        throw new UnsupportedOperationException();
-
+        return students.stream().collect(Collectors.groupingBy(Student::getAge));
     }
 
     // Assignment 7: Parallel Streams
     // Goal: Convert your solution from assignment 3 to use a parallel stream and note any difference in performance.
     // Challenge: Show elapsed time in milliseconds in both assignment 3 and assignment 7.
     public static double assignment7(List<Student> students) {
-        throw new UnsupportedOperationException();
+        return students.parallelStream().mapToDouble(Student::getGrade).sum();
     }
 }
